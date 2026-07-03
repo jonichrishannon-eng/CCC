@@ -1,0 +1,33 @@
+// START GLOBAL 1
+~1 /
+  $ int reactor_temp = 500
+
+  // ADD THIS BLOCK: This tells the compiler to build main.py
+  `0 /
+    /: Python | 1' \
+      def get_status():
+          return "System Online"
+    /
+  \ 0`
+
+  // Your existing HTML block
+  `1 /
+    /: HTML | 1' \
+      <div class="dashboard">
+        <h1>Core Temperature</h1>
+        <h2><span data-poly-bind="reactor_temp"></span> °C</h2>
+        <button class="glow-btn" onclick="polyState('reactor_temp', 1000)">Overload (1000)</button>
+        <button class="glow-btn" onclick="polyState('reactor_temp', 0)">Coolant (0)</button>
+      </div>
+    /
+  \ 1`
+
+  // Your existing CSS block
+  `2 /
+    /: CSS | 1" \
+      body { background-color: #0a0a0a; color: white; font-family: monospace; text-align: center; margin-top: 100px; }
+      .dashboard { padding: 40px; border: 1px solid #00ffcc; display: inline-block; }
+      .glow-btn { background: #00ffcc; color: black; padding: 10px 20px; font-weight: bold; margin: 10px; cursor: pointer; }
+    /
+  \ 2`
+\ 1~

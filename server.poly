@@ -1,0 +1,36 @@
+// START GLOBAL 1
+~1 /
+  
+  ; Python & HTML & CSS
+  $ bool logged_in = True
+
+  // BACKEND ENGINE
+  `1 /
+    /: Python | 1' \
+      def verify_user():
+          print("User verification initialized.")
+          return True
+    /
+  \ 1`
+
+  // FRONTEND ENGINE (HTML)
+  `2 /
+    /: HTML | 1" \
+      <div class="dashboard">
+        <h1>Anti-Gravity Dashboard</h1>
+        <p>Your compiler is officially alive.</p>
+        <button class="glow-btn">Initialize</button>
+      </div>
+    /
+  \ 2`
+
+  // FRONTEND ENGINE (CSS)
+  `3 /
+    /: CSS | 1" \
+      body { background-color: #121212; color: white; font-family: sans-serif; }
+      .dashboard { padding: 40px; border: 1px solid #333; border-radius: 10px; }
+      .glow-btn { background: #00ffcc; color: black; padding: 10px 20px; border: none; cursor: pointer; }
+    /
+  \ 3`
+
+\ 1~

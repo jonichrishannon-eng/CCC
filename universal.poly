@@ -1,0 +1,21 @@
+// START GLOBAL 1
+~1 /
+  
+  // High-Level Data Pipeline
+  `1 /
+    /: Python | 1' \
+      def calculate_trajectory():
+          print("Trajectory calculated. Sending to hardware...")
+          return True
+    /
+  \ 1`
+  
+  // Low-Level Hardware Firmware
+  `2 /
+    /: CPP | 1' \
+      std::cout << "Hardware Initialized." << std::endl;
+      std::cout << "Awaiting trajectory data..." << std::endl;
+    /
+  \ 2`
+
+\ 1~

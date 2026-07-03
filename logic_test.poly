@@ -1,0 +1,39 @@
+// START GLOBAL 1
+~1 /
+  
+  ; Python & HTML & CSS
+  
+  // NOTE: This is hardcoded for the test! 
+  // Change to True later to see the API let you through!
+  $ bool is_admin = False  
+
+  // BACKEND ENGINE
+  `1 /
+    // Notice the Condition: ? is_admin == True
+    /: Python | 1' | ? is_admin == True \
+      def launch_missiles():
+          return "Missiles Launched! Target acquired."
+    /
+  \ 1`
+
+  // FRONTEND ENGINE (HTML)
+  `2 /
+    // Notice the Loop: @ item in ['Alpha', 'Bravo']
+    /: HTML | 1" | @ item in ['Alpha', 'Bravo'] \
+      <div class="dashboard">
+        <h1>Admin Control Panel</h1>
+        <button class="glow-btn">Fire</button>
+      </div>
+    /
+  \ 2`
+  
+  // FRONTEND ENGINE (CSS)
+  `3 /
+    /: CSS | 1" \
+      body { background-color: #121212; color: white; font-family: sans-serif; }
+      .dashboard { padding: 40px; border: 1px solid #ff0044; border-radius: 10px; margin-bottom: 10px; }
+      .glow-btn { background: #ff0044; color: white; padding: 10px 20px; border: none; cursor: pointer; }
+    /
+  \ 3`
+
+\ 1~

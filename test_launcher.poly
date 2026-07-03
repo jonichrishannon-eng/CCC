@@ -1,0 +1,19 @@
+// START GLOBAL 1
+~1 /
+/: MOSR | OMNI-Manifest \
+  [Target: Windows]
+    compiler: MSVC
+    fallback: GNU-user-space
+    
+  [Privilege: User-Space]
+    force_gnu_linker: True
+    bypass_registry: True
+/
+
+  // A tiny local block so the generator actually has something to build!
+  `1 /
+  /: HTML | 1' \
+  <h1>OMNI Launcher is Online!</h1>
+  /
+  \ 1`
+\ 1~
