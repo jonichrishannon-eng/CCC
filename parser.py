@@ -65,7 +65,8 @@ def parse_compute_header(header_string):
         "priority": None,  # BACKEND or FRONTEND
         "condition": None, # e.g., logged_in == False
         "amendment": None, # e.g., h1=Header
-        "loop": None       # e.g., task in task_list
+        "loop": None,      # e.g., task in task_list
+        "filename": None   # e.g., server.py
     }
 
     # Split the string by your pipe | symbol and clean up spaces
@@ -94,7 +95,11 @@ def parse_compute_header(header_string):
         elif '"' in chunk:
             rules["priority"] = "FRONTEND"
             
-        # 6. Engine (If it has no special symbols, it must be the language name)
+        # 6. Filename (Contains a dot, e.g., server.py)
+        elif "." in chunk and not chunk.startswith("!") and not chunk.startswith("?") and not chunk.startswith("@"):
+            rules["filename"] = chunk
+
+        # 7. Engine (If it has no special symbols, it must be the language name)
         else:
             rules["engine"] = chunk
 

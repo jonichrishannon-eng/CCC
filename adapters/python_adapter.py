@@ -128,4 +128,7 @@ if __name__ == "__main__":
     uvicorn.run(app, host="0.0.0.0", port=8000)
 """
 
-    return {"main.py": fastapi_server}
+    filename = "main.py"
+    if blocks and "rules" in blocks[0] and blocks[0]["rules"].get("filename"):
+        filename = blocks[0]["rules"]["filename"]
+    return {filename: fastapi_server}

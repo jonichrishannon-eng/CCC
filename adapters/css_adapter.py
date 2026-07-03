@@ -13,4 +13,7 @@ def build(blocks, manifest=None):
         output += f"/* Source Block: `{block.get('id')} */\n"
         output += block.get("raw_code", "") + "\n\n"
         
-    return {"styles.css": output}
+    filename = "styles.css"
+    if blocks and "rules" in blocks[0] and blocks[0]["rules"].get("filename"):
+        filename = blocks[0]["rules"]["filename"]
+    return {filename: output}
