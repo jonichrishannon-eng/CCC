@@ -53,4 +53,7 @@ def build(blocks, manifest=None):
 </body>
 </html>"""
     
-    return {"index.html": output}
+    filename = "index.html"
+    if blocks and "rules" in blocks[0] and blocks[0]["rules"].get("filename"):
+        filename = blocks[0]["rules"]["filename"]
+    return {filename: output}
