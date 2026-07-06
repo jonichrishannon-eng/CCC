@@ -8,7 +8,17 @@ from parser import parse_mosr_manifest, build_ast, extract_payloads
 from lexer import lex_poly_file       
 from generator import generate_files  
 
-PROFILE_PATH = "omni_profile.json"
+def get_appdata_dir():
+    if platform.system() == "Windows":
+        base_dir = os.environ.get("LOCALAPPDATA", os.path.expanduser("~"))
+        app_dir = os.path.join(base_dir, "OMNI_Engine")
+    else:
+        app_dir = os.path.join(os.path.expanduser("~"), ".omni_engine")
+    if not os.path.exists(app_dir):
+        os.makedirs(app_dir, exist_ok=True)
+    return app_dir
+
+PROFILE_PATH = os.path.join(get_appdata_dir(), "omni_profile.json")
 
 # ==========================================
 # 1. THE ONE-TIME SYSTEM PROFILER
@@ -91,6 +101,9 @@ def execute_poly_file(filepath):
 if __name__ == "__main__":
     import sys
     if len(sys.argv) < 2:
-        print("Usage: python omni.py <file.poly>")
+        print("Usage: omni <file.poly> OR omni repair")
+    elif sys.argv[1] == "repair":
+        from repair import verify_and_heal
+        verify_and_heal()
     else:
         execute_poly_file(sys.argv[1])

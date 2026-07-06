@@ -15,6 +15,7 @@ def clean_ai_response(text):
     return text.strip()
 
 def scan_ledger(output_dir="build"):
+    output_dir = os.path.join(os.getcwd(), output_dir)
     ledger_path = os.path.join(output_dir, "poly.log")
     if not os.path.exists(ledger_path):
         print("❌ [Repair] No poly.log found. Cannot verify integrity.")
@@ -36,6 +37,7 @@ def scan_ledger(output_dir="build"):
     return expected_hashes
 
 def verify_and_heal(output_dir="build"):
+    output_dir = os.path.join(os.getcwd(), output_dir)
     expected_hashes = scan_ledger(output_dir)
     if not expected_hashes: return
     
@@ -67,6 +69,15 @@ def verify_and_heal(output_dir="build"):
     else:
         print("\n✅ [Immune System] All files mathematically verified. Architecture is stable.")
 
+def get_appdata_dir():
+    import platform
+    if platform.system() == "Windows":
+        base_dir = os.environ.get("LOCALAPPDATA", os.path.expanduser("~"))
+        app_dir = os.path.join(base_dir, "OMNI_Engine")
+    else:
+        app_dir = os.path.join(os.path.expanduser("~"), ".omni_engine")
+    return app_dir
+
 def trigger_bypass(collision):
     """The Two-Layer Survival Mechanism."""
     import json # Added here just in case it isn't at the top of the file
@@ -80,7 +91,10 @@ def trigger_bypass(collision):
     # LAYER 1: OMNIMod Community Marketplace
     # ==========================================
     print("     -> [Layer 1] Querying free & open OMNIMod Community Marketplace...")
-    marketplace_file = "marketplace.json"
+    local_marketplace_file = os.path.join(os.getcwd(), "marketplace.json")
+    global_marketplace_file = os.path.join(get_appdata_dir(), "marketplace.json")
+    marketplace_file = local_marketplace_file if os.path.exists(local_marketplace_file) else global_marketplace_file
+    print(f"     -> [Info] Using marketplace at: {marketplace_file}")
     
     if os.path.exists(marketplace_file):
         with open(marketplace_file, "r", encoding="utf-8") as f:
@@ -101,7 +115,8 @@ def trigger_bypass(collision):
             timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
             ledger_entry = f"[{timestamp}] ACTION: HEAL | FILE: {filename} | ENGINE: OMNIMOD_MARKETPLACE | SHA256: {new_hash}\n"
             
-            with open(os.path.join("build", "poly.log"), "a", encoding="utf-8") as f:
+            output_dir = os.path.dirname(filepath)
+            with open(os.path.join(output_dir, "poly.log"), "a", encoding="utf-8") as f:
                 f.write(ledger_entry)
                 
             print(f"     -> 🟢 SUCCESS: File repaired via Community Patch. New hash: {new_hash[:8]}...")
@@ -151,7 +166,8 @@ def trigger_bypass(collision):
         timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         ledger_entry = f"[{timestamp}] ACTION: HEAL | FILE: {filename} | ENGINE: AI_SYNTHESIZER | SHA256: {new_hash}\n"
         
-        with open(os.path.join("build", "poly.log"), "a", encoding="utf-8") as f:
+        output_dir = os.path.dirname(filepath)
+        with open(os.path.join(output_dir, "poly.log"), "a", encoding="utf-8") as f:
             f.write(ledger_entry)
             
         print(f"     -> 🟢 SUCCESS: File repaired via AI Synthesis. New hash: {new_hash[:8]}...")
