@@ -40,14 +40,16 @@ def generate_files(ast, output_dir="build", manifest=None):
     # ==========================================
     # 2. Dynamically load, execute, and LOG adapters
     # ==========================================
+    output_files = {}
     for engine, blocks in engine_blocks.items():
         try:
             adapter_module = importlib.import_module(f"adapters.{engine}_adapter")
-            output_files = adapter_module.build(blocks, manifest)
+            engine_output = adapter_module.build(blocks, manifest)
+            if engine_output:
+                output_files.update(engine_output)
             
-            # 3. Write files and stamp the Cryptographic Ledger
-            if output_files:
-                for filename, content in output_files.items():
+                # 3. Write files and stamp the Cryptographic Ledger
+                for filename, content in engine_output.items():
                     filepath = os.path.join(output_dir, filename)
                     
                     # Write the physical file
