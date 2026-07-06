@@ -9,13 +9,15 @@ def generate_sha256(content):
     return hashlib.sha256(content.encode('utf-8')).hexdigest()
 
 def generate_files(ast, output_dir="build", manifest=None):
-    print(f"🌍 Initializing Universal Plugin System in '{output_dir}/'...\n")
+    # Dynamically resolve relative to current working directory
+    resolved_output_dir = os.path.join(os.getcwd(), output_dir)
+    print(f"🌍 Initializing Universal Plugin System in '{resolved_output_dir}/'...\n")
     
     if manifest:
         print(f"  🧠 [Generator] Applying MOSR manifest rules...")
 
-    if not os.path.exists(output_dir):
-        os.makedirs(output_dir)
+    if not os.path.exists(resolved_output_dir):
+        os.makedirs(resolved_output_dir)
 
     # Prepare our real-time ledger memory
     ledger_entries = []
@@ -50,7 +52,7 @@ def generate_files(ast, output_dir="build", manifest=None):
             
                 # 3. Write files and stamp the Cryptographic Ledger
                 for filename, content in engine_output.items():
-                    filepath = os.path.join(output_dir, filename)
+                    filepath = os.path.join(resolved_output_dir, filename)
                     
                     # Write the physical file
                     with open(filepath, "w", encoding="utf-8") as f:
@@ -74,7 +76,7 @@ def generate_files(ast, output_dir="build", manifest=None):
     # 4. Commit the Ledger to Disk
     # ==========================================
     if ledger_entries:
-        ledger_path = os.path.join(output_dir, "poly.log")
+        ledger_path = os.path.join(resolved_output_dir, "poly.log")
         # We use "a" (append) so patches stack chronologically as Local Amendments
         with open(ledger_path, "a", encoding="utf-8") as log_file:
             for entry in ledger_entries:
