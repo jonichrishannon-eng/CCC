@@ -18,7 +18,7 @@ Write-Host "`n[2/3] Compiling OMNI Engine..." -ForegroundColor Yellow
 if (Test-Path -Path "build") { Remove-Item -Recurse -Force "build" }
 if (Test-Path -Path "dist") { Remove-Item -Recurse -Force "dist" }
 
-pyinstaller --noconfirm omni.spec
+python -m PyInstaller --noconfirm omni.spec
 if ($LASTEXITCODE -ne 0) {
     Write-Error "PyInstaller failed with code $LASTEXITCODE"
     Exit $LASTEXITCODE
@@ -28,10 +28,7 @@ Write-Host "PyInstaller Compilation Successful." -ForegroundColor Green
 # Step 3: Package with Inno Setup
 Write-Host "`n[3/3] Creating Windows Installer Setup..." -ForegroundColor Yellow
 
-$InnoSetupPath = "$env:ProgramFiles (x86)\Inno Setup 6\ISCC.exe"
-if (!(Test-Path -Path $InnoSetupPath)) {
-    $InnoSetupPath = "$env:ProgramFiles\Inno Setup 6\ISCC.exe"
-}
+$InnoSetupPath = "$env:USERPROFILE\Documents\InnoSetup\ISCC.exe"
 
 if (!(Test-Path -Path $InnoSetupPath)) {
     Write-Error "Inno Setup Compiler (ISCC.exe) not found. Please install Inno Setup 6."
